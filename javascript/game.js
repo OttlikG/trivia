@@ -4,11 +4,15 @@ exports.Game = function() {
   this.places           = new Array(6);
   this.purses           = new Array(6);
   this.inPenaltyBox     = new Array(6);
+  this.markets = new Array('US', 'China', 'Hungary', 'Germany', 'UK');
+  this.market = this.markets[2]
 
   var popQuestions     = new Array();
   var scienceQuestions = new Array();
   var sportsQuestions  = new Array();
   var rockQuestions    = new Array();
+
+  var markets = new Array('US', 'China', 'Hungary', 'Germany', 'UK');
 
   this.currentPlayer    = 0;
   var isGettingOutOfPenaltyBox = false;
@@ -17,6 +21,18 @@ exports.Game = function() {
     const coinsNeeded = this.isKid[this.currentPlayer] ? 4 : 6;
     return !(this.purses[this.currentPlayer] == coinsNeeded)
   };
+
+  this.getMarketQuestion = (category) => {
+    const currentCategory = this.currentCategory()
+
+    if(this.market == 'US') {
+      if(currentCategory == 'Science') {
+        return 'Politics'
+  }
+    }
+
+    return currentCategory
+  }
 
   this.currentCategory = () => {
     if(this.places[this.currentPlayer] == 0)
@@ -70,13 +86,13 @@ exports.Game = function() {
 
 
   var askQuestion = () => {
-    if(this.currentCategory() == 'Pop')
+    if(this.getMarketQuestion() == 'Pop')
       console.log(popQuestions.shift());
-    if(this.currentCategory() == 'Science')
+    if(this.getMarketQuestion() == 'Science')
       console.log(scienceQuestions.shift());
-    if(this.currentCategory() == 'Sports')
+    if(this.getMarketQuestion() == 'Sports')
       console.log(sportsQuestions.shift());
-    if(this.currentCategory() == 'Rock')
+    if(this.getMarketQuestion() == 'Rock')
       console.log(rockQuestions.shift());
   };
 
@@ -95,7 +111,7 @@ exports.Game = function() {
         }
 
         console.log(players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-        console.log("The category is " + this.currentCategory());
+        console.log("The category is " + this.getMarketQuestion());
         askQuestion();
       }else{
         console.log(players[this.currentPlayer] + " is not getting out of the penalty box");
@@ -109,7 +125,7 @@ exports.Game = function() {
       }
 
       console.log(players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-      console.log("The category is " + this.currentCategory());
+      console.log("The category is " + this.getMarketQuestion());
       askQuestion();
     }
   };

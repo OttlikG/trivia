@@ -211,3 +211,29 @@ describe('currentCategory', () => {
     expect(game.currentCategory()).toBe(categoryType)
   })
 })
+
+describe('getMarketQuestion', () => {
+  let game
+
+  beforeEach(() => {
+    game = new Game()
+  })
+
+  it('should return with Politics insted of Scienc on US market', () => {
+    game.add('Player1')
+    game.market = 'US'
+    game.places[0] = 1
+
+    const questionType = game.getMarketQuestion()
+    expect(questionType).toBe('Politics')
+  })
+
+  it('should return with defualt category when the market it\'s not US', () => {
+    game.add('Plaer1')
+    game.market = 'Hungary'
+    game.places[0] = 0
+
+    const questionType = game.getMarketQuestion()
+    expect(questionType).toBe('Pop')
+  })
+})
