@@ -1,6 +1,6 @@
 exports.Game = function() {
   var players          = new Array();
-  var places           = new Array(6);
+  this.places           = new Array(6);
   this.purses           = new Array(6);
   var inPenaltyBox     = new Array(6);
 
@@ -16,24 +16,24 @@ exports.Game = function() {
     return !(this.purses[this.currentPlayer] == 6)
   };
 
-  var currentCategory = () => {
-    if(places[this.currentPlayer] == 0)
+  this.currentCategory = () => {
+    if(this.places[this.currentPlayer] == 0)
       return 'Pop';
-    if(places[this.currentPlayer] == 4)
+    if(this.places[this.currentPlayer] == 4)
       return 'Pop';
-    if(places[this.currentPlayer] == 8)
+    if(this.places[this.currentPlayer] == 8)
       return 'Pop';
-    if(places[this.currentPlayer] == 1)
+    if(this.places[this.currentPlayer] == 1)
       return 'Science';
-    if(places[this.currentPlayer] == 5)
+    if(this.places[this.currentPlayer] == 5)
       return 'Science';
-    if(places[this.currentPlayer] == 9)
+    if(this.places[this.currentPlayer] == 9)
       return 'Science';
-    if(places[this.currentPlayer] == 2)
+    if(this.places[this.currentPlayer] == 2)
       return 'Sports';
-    if(places[this.currentPlayer] == 6)
+    if(this.places[this.currentPlayer] == 6)
       return 'Sports';
-    if(places[this.currentPlayer] == 10)
+    if(this.places[this.currentPlayer] == 10)
       return 'Sports';
     return 'Rock';
   };
@@ -51,7 +51,7 @@ exports.Game = function() {
 
   this.add = (playerName) => {
     players.push(playerName);
-    places[this.howManyPlayers() - 1] = 0;
+    this.places[this.howManyPlayers() - 1] = 0;
     this.purses[this.howManyPlayers() - 1] = 0;
     inPenaltyBox[this.howManyPlayers() - 1] = false;
 
@@ -67,13 +67,13 @@ exports.Game = function() {
 
 
   var askQuestion = () => {
-    if(currentCategory() == 'Pop')
+    if(this.currentCategory() == 'Pop')
       console.log(popQuestions.shift());
-    if(currentCategory() == 'Science')
+    if(this.currentCategory() == 'Science')
       console.log(scienceQuestions.shift());
-    if(currentCategory() == 'Sports')
+    if(this.currentCategory() == 'Sports')
       console.log(sportsQuestions.shift());
-    if(currentCategory() == 'Rock')
+    if(this.currentCategory() == 'Rock')
       console.log(rockQuestions.shift());
   };
 
@@ -86,13 +86,13 @@ exports.Game = function() {
         isGettingOutOfPenaltyBox = true;
 
         console.log(players[this.currentPlayer] + " is getting out of the penalty box");
-        places[this.currentPlayer] = places[this.currentPlayer] + roll;
-        if(places[this.currentPlayer] > 11){
-          places[this.currentPlayer] = places[this.currentPlayer] - 12;
+        this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
+        if(this.places[this.currentPlayer] > 11){
+          this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
         }
 
-        console.log(players[this.currentPlayer] + "'s new location is " + places[this.currentPlayer]);
-        console.log("The category is " + currentCategory());
+        console.log(players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+        console.log("The category is " + this.currentCategory());
         askQuestion();
       }else{
         console.log(players[this.currentPlayer] + " is not getting out of the penalty box");
@@ -100,13 +100,13 @@ exports.Game = function() {
       }
     }else{
 
-      places[this.currentPlayer] = places[this.currentPlayer] + roll;
-      if(places[this.currentPlayer] > 11){
-        places[this.currentPlayer] = places[this.currentPlayer] - 12;
+      this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
+      if(this.places[this.currentPlayer] > 11){
+        this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
       }
 
-      console.log(players[this.currentPlayer] + "'s new location is " + places[this.currentPlayer]);
-      console.log("The category is " + currentCategory());
+      console.log(players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+      console.log("The category is " + this.currentCategory());
       askQuestion();
     }
   };
