@@ -1,4 +1,4 @@
-require('./game.js');
+var Game = require('./game').Game;
 
 describe("The test environment", function() {
   it("should pass", function() {
