@@ -12,7 +12,6 @@ exports.Game = function() {
   var sportsQuestions  = new Array();
   var rockQuestions    = new Array();
 
-  var markets = new Array('US', 'China', 'Hungary', 'Germany', 'UK');
 
   this.currentPlayer    = 0;
   var isGettingOutOfPenaltyBox = false;
@@ -28,7 +27,7 @@ exports.Game = function() {
     if(this.market == 'US') {
       if(currentCategory == 'Science') {
         return 'Politics'
-  }
+      }
     }
 
     return currentCategory
@@ -133,29 +132,20 @@ exports.Game = function() {
   this.wasCorrectlyAnswered = () => {
     if(this.inPenaltyBox[this.currentPlayer]){
       if(isGettingOutOfPenaltyBox){
-        console.log('Answer was correct!!!!');
-        this.purses[this.currentPlayer] += 1;
-        console.log(players[this.currentPlayer] + " now has " +
-                    this.purses[this.currentPlayer]  + " Gold Coins.");
-
-        var winner = this.didPlayerWin();
-        this.currentPlayer += 1;
-        if(this.currentPlayer == players.length)
-          this.currentPlayer = 0;
-
-        return winner;
+        return this.handleSuccessAnswerOnMarket()
       }else{
         this.currentPlayer += 1;
         if(this.currentPlayer == players.length)
           this.currentPlayer = 0;
         return true;
       }
-
-
-
     }else{
+      return this.handleSuccessAnswerOnMarket();   
+    }
+  };
 
-      console.log("Answer was correct!!!!");
+  this.handleSuccessAnswer = () => {
+    console.log("Answer was correct!!!!");
 
       this.purses[this.currentPlayer] += 1;
       console.log(players[this.currentPlayer] + " now has " +
@@ -168,14 +158,23 @@ exports.Game = function() {
         this.currentPlayer = 0;
 
       return winner;
+  }
+      
+  this.handleSuccessAnswerOnMarket = () => {
+    const answerResult = this.handleSuccessAnswer()
+
+    if (this.market === 'Germany') {
+      this.purses[this.currentPlayer] += 1
     }
-  };
+
+    return answerResult
+  }
 
   this.wrongAnswer = () => {
     console.log('Question was incorrectly answered');
 
     // Only send adults to the penalty box, unless it's Pop, everybody knows Pop
-    if(!this.isKid[this.currentPlayer] || this.currentCategory() == 'Pop') {
+    if(!this.isKid[this.currentPlayer] || this.getMarketQuestion() == 'Pop') {
       console.log(players[this.currentPlayer] + " was sent to the penalty box");
       this.inPenaltyBox[this.currentPlayer] = true;
     }
