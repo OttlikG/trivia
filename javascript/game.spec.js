@@ -1,16 +1,6 @@
 var Game = require('./game').Game;
 var Random = require('./prng').Random;
 
-describe("The test environment", function() {
-  it("should pass", function() {
-    expect(true).toBe(true);
-  });
-
-  it("should access game", function() {
-    expect(Game).toBeDefined();
-  });
-});
-
 describe("Game", function () {
   let consoleSpy
   let _console = console.log
@@ -58,3 +48,19 @@ describe("Game", function () {
     expect(consoleSpy.mock.calls.flat()).toMatchSnapshot()
   })
 });
+
+describe('didThePlayerWin', () => {
+  it('should the player win the game if the current player purses not equal to 6', () => {
+    const game = new Game()
+
+    game.purses = [5]
+    expect(game.didPlayerWin()).toBe(true)
+  })
+
+  it('should return with false if the current player\'s purses equal 6', () => {
+    const game = new Game()
+    game.purses = [6]
+
+    expect(game.didPlayerWin()).toBe(false)
+  })
+})

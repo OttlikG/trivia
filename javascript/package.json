@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "test": "jest game"
+    "test": "jest game",
+    "coverage": "jest --collectCoverage"
   },
   "devDependencies": {
     "jest": "^24.9.0"
