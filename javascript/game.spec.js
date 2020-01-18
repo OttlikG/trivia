@@ -74,40 +74,22 @@ describe('currentCategory', () => {
     game.add('Player2')
   })
 
-  it('should return with pop on 0 4 8', () => {
-    const popCategories = [0, 4, 8]
-
-    popCategories.map(popCategory => {
-      game.places[game.currentPlayer] = popCategory
-      
-      expect(game.currentCategory()).toBe('Pop')
-    })
-  })
-
-  it('should return with science on 1 5 9', () => {
-    const scienceCategories = [1, 5, 9]
-
-    scienceCategories.map(scienceCategory => {
-      game.places[game.currentPlayer] = scienceCategory
-      expect(game.currentCategory()).toBe('Science')
-    })
-  })
-
-  it('should return with sports on 1 5 9', () => {
-    const sportCategories = [2, 6, 10]
-
-    sportCategories.map(sportCategory => {
-      game.places[game.currentPlayer] = sportCategory
-      expect(game.currentCategory()).toBe('Sports')
-    })
-  })
-
-  it('should return with rock on 4 7 11 and greater', () => {
-    const rockCategories = [3, 7, 11, 12]
-
-    rockCategories.map(rockCategory => {
-      game.places[game.currentPlayer] = rockCategory
-      expect(game.currentCategory()).toBe('Rock')
-    })
+  it.each([
+    ['Pop', 0],
+    ['Pop', 4],
+    ['Pop', 8],
+    ['Science', 1],
+    ['Science', 5],
+    ['Science', 9],
+    ['Sports', 2],
+    ['Sports', 6],
+    ['Sports', 10],
+    ['Rock', 3],
+    ['Rock', 7],
+    ['Rock', 11],
+    ['Rock', 12]
+  ])('should return with %s', (categoryType, number) => {
+    game.places[game.currentPlayer] = number
+    expect(game.currentCategory()).toBe(categoryType)
   })
 })
