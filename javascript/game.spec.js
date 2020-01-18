@@ -139,6 +139,50 @@ describe('wrongAnswer', () => {
   })
 })
 
+describe('Player wins', () => {
+  let game
+
+  beforeEach(() => {
+    game = new Game()
+    game.add('Adult')
+    game.add('Kid', true)
+  })
+
+  it('when adult and has 6 coins', () => {
+    game.currentPlayer = 0;
+    game.purses[game.currentPlayer] = 6;
+    expect(game.didPlayerWin()).toBe(false) // false means win
+  })
+
+  it('when kid and has 4 coins', () => {
+    game.currentPlayer = 1;
+    game.purses[game.currentPlayer] = 4;
+    expect(game.didPlayerWin()).toBe(false) // false means win
+  })
+})
+
+describe('Player does not win', () => {
+  let game
+
+  beforeEach(() => {
+    game = new Game()
+    game.add('Adult')
+    game.add('Kid', true)
+  })
+
+  it('when adult and does not have 6 coins', () => {
+    game.currentPlayer = 0;
+    game.purses[game.currentPlayer] = 5;
+    expect(game.didPlayerWin()).toBe(true) // true means NO win
+  })
+
+  it('when kid and does not have 4 coins', () => {
+    game.currentPlayer = 1;
+    game.purses[game.currentPlayer] = 3;
+    expect(game.didPlayerWin()).toBe(true) // true means NO win
+  })
+})
+
 describe('currentCategory', () => {
   let game
 
