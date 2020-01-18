@@ -119,3 +119,31 @@ describe('wrongAnswer', () => {
   })
 })
 
+describe('currentCategory', () => {
+  let game
+
+  beforeEach(() => {
+    game = new Game()
+    game.add('Player1')
+    game.add('Player2')
+  })
+
+  it.each([
+    ['Pop', 0],
+    ['Pop', 4],
+    ['Pop', 8],
+    ['Science', 1],
+    ['Science', 5],
+    ['Science', 9],
+    ['Sports', 2],
+    ['Sports', 6],
+    ['Sports', 10],
+    ['Rock', 3],
+    ['Rock', 7],
+    ['Rock', 11],
+    ['Rock', 12]
+  ])('should return with %s', (categoryType, number) => {
+    game.places[game.currentPlayer] = number
+    expect(game.currentCategory()).toBe(categoryType)
+  })
+})
