@@ -166,4 +166,20 @@ exports.Game = function() {
       currentPlayer = 0;
 		return true;
   };
+
+  this.run = function(){
+    var notAWinner = false;
+    
+    do{
+
+      this.roll(Math.floor(Math.random()*6) + 1);
+    
+      if(Math.floor(Math.random()*10) == 7){
+        notAWinner = this.wrongAnswer();
+      }else{
+        notAWinner = this.wasCorrectlyAnswered();
+      }
+    
+    }while(notAWinner);    
+  }
 };
