@@ -2,7 +2,7 @@ exports.Game = function() {
   var players          = new Array();
   var places           = new Array(6);
   this.purses           = new Array(6);
-  var inPenaltyBox     = new Array(6);
+  this.inPenaltyBox     = new Array(6);
 
   var popQuestions     = new Array();
   var scienceQuestions = new Array();
@@ -53,7 +53,7 @@ exports.Game = function() {
     players.push(playerName);
     places[this.howManyPlayers() - 1] = 0;
     this.purses[this.howManyPlayers() - 1] = 0;
-    inPenaltyBox[this.howManyPlayers() - 1] = false;
+    this.inPenaltyBox[this.howManyPlayers() - 1] = false;
 
     console.log(playerName + " was added");
     console.log("They are player number " + players.length);
@@ -81,7 +81,7 @@ exports.Game = function() {
     console.log(players[this.currentPlayer] + " is the current player");
     console.log("They have rolled a " + roll);
 
-    if(inPenaltyBox[this.currentPlayer]){
+    if(this.inPenaltyBox[this.currentPlayer]){
       if(roll % 2 != 0){
         isGettingOutOfPenaltyBox = true;
 
@@ -112,7 +112,7 @@ exports.Game = function() {
   };
 
   this.wasCorrectlyAnswered = () => {
-    if(inPenaltyBox[this.currentPlayer]){
+    if(this.inPenaltyBox[this.currentPlayer]){
       if(isGettingOutOfPenaltyBox){
         console.log('Answer was correct!!!!');
         this.purses[this.currentPlayer] += 1;
@@ -155,7 +155,7 @@ exports.Game = function() {
   this.wrongAnswer = () => {
 		console.log('Question was incorrectly answered');
 		console.log(players[this.currentPlayer] + " was sent to the penalty box");
-		inPenaltyBox[this.currentPlayer] = true;
+		this.inPenaltyBox[this.currentPlayer] = true;
 
     this.currentPlayer += 1;
     if(this.currentPlayer == players.length)
