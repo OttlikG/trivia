@@ -1,5 +1,6 @@
 exports.Game = function() {
   var players          = new Array();
+  this.isKid           = new Array();
   this.places           = new Array(6);
   this.purses           = new Array(6);
   this.inPenaltyBox     = new Array(6);
@@ -13,7 +14,8 @@ exports.Game = function() {
   var isGettingOutOfPenaltyBox = false;
 
   this.didPlayerWin = () => {
-    return !(this.purses[this.currentPlayer] == 6)
+    const coinsNeeded = this.isKid[this.currentPlayer] ? 4 : 6;
+    return !(this.purses[this.currentPlayer] == coinsNeeded)
   };
 
   this.currentCategory = () => {
@@ -49,9 +51,10 @@ exports.Game = function() {
     rockQuestions.push(this.createRockQuestion(i));
   };
 
-  this.add = (playerName) => {
+  this.add = (playerName, isKid) => {
     players.push(playerName);
     this.places[this.howManyPlayers() - 1] = 0;
+    this.isKid[this.howManyPlayers() - 1] = !!isKid;
     this.purses[this.howManyPlayers() - 1] = 0;
     this.inPenaltyBox[this.howManyPlayers() - 1] = false;
 
@@ -153,9 +156,13 @@ exports.Game = function() {
   };
 
   this.wrongAnswer = () => {
-		console.log('Question was incorrectly answered');
-		console.log(players[this.currentPlayer] + " was sent to the penalty box");
-		this.inPenaltyBox[this.currentPlayer] = true;
+    console.log('Question was incorrectly answered');
+
+    // Only send adults to the penalty box, unless it's Pop, everybody knows Pop
+    if(!this.isKid[this.currentPlayer] || this.currentCategory() == 'Pop') {
+      console.log(players[this.currentPlayer] + " was sent to the penalty box");
+      this.inPenaltyBox[this.currentPlayer] = true;
+    }
 
     this.currentPlayer += 1;
     if(this.currentPlayer == players.length)
