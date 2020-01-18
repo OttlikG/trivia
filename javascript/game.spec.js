@@ -106,6 +106,26 @@ describe('wrongAnswer', () => {
     expect(game.inPenaltyBox[0]).toBe(true)
   })  
 
+  it.each([
+    'Rock',
+    'Science',
+    'Sports',
+  ])('should not place kids in the penalty box for %s questions', (categoryType) => {
+    const game = new Game();
+    game.add('Bob', true)
+    game.currentCategory = () => categoryType;
+    game.wrongAnswer();
+    expect(game.inPenaltyBox[0]).toBe(false)
+  })  
+
+  test('should place kids in the penalty box for Pop questions', () => {
+    const game = new Game();
+    game.add('Bob', true)
+    game.currentCategory = () => 'Pop';
+    game.wrongAnswer();
+    expect(game.inPenaltyBox[0]).toBe(true)
+  })  
+
   it('should print to console the expected output', () => {
     const game = new Game();
     game.add('Bob')
