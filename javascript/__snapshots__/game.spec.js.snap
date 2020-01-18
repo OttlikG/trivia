@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Game  1`] = `
+exports[`Game Should be the same output on every run 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
